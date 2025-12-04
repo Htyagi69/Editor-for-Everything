@@ -3,9 +3,6 @@
 <head>
   <title>Create PDF</title>
   <style>
-    body{
-      background-color: rgb(47, 45, 45);
-    }
     form{
       display: flex;
       flex-direction: column;
@@ -17,7 +14,7 @@
     min-height: 740px;
     font-size: 16px;
     font-family:'Times New Roman', Times, serif;
-    padding: 17px;
+    padding: 12px;
     box-sizing: border-box;
     border: 2px solid #ccc;
     background: #fff;
@@ -38,10 +35,11 @@
 </head>
 <body>
 
-  <button class="btn"id="thick" onclick=handleThicker()>BoldFoward</button>
   <button class="btn"id="thick" onclick=handleThick()>Bold</button>
   <button class="btn" id="italy" onclick=handleItaly()>Italic</button>
   <button class="btn" id="under" onclick=handleUnder()>Underline</button>
+
+<form action="/file" method="POST">
   <select id="fontSizeSelect" onchange="handleFont()">
     <option value="8px">Small</option>
     <option value="20px">Medium</option>
@@ -49,7 +47,6 @@
     <option value="60px">Extra Large</option>
   </select>  
 
-<form action="/file" method="POST">
 
   <div class="page">
     <div name="content" id="editor" class="a4-textarea" contenteditable="true" style="height: auto;" ></div>
@@ -128,15 +125,6 @@ function handleUnder(){
   span.style.textDecoration="underline";
 
   range.surroundContents(span);
-}
-function handleThicker(){
-  // const boldy=document.querySelector('')
-   const selection = window.getSelection();
-   const range=selection.getRangeAt(0);
-  const span=document.createElement('span')
-  span.style.fontWeight="bold";
-     range.surroundContents(span);
-     
 }
 </script>
 

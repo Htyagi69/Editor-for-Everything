@@ -58,6 +58,22 @@ app.post('/file', async (req, res) => {
 });
 
 
+// app.get('/edit', async (req, res) => {
+//   try {
+//     const existingPdfBytes = fs.readFileSync("./sample.pdf");
+//     const pdfDoc = await PDFDocument.load(existingPdfBytes);
+//     res.send(pdfDoc);
+//     // res.redirect('/');
+
+//     // res.setHeader("Content-Type", "application/pdf");
+//     // res.setHeader("Content-Disposition", "inline; filename=editable.pdf");
+//     // res.send(Buffer.from(pdfBytes));
+
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).send("Error editing PDF");
+//   }
+// });
 app.get('/edit', async (req, res) => {
   try {
     const existingPdfBytes = fs.readFileSync("./sample.pdf");
