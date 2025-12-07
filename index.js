@@ -1,9 +1,10 @@
 const express = require('express');
 const ejs = require('ejs');
 const path = require('path');
+const multer=require('multer')
 const puppeteer = require('puppeteer');
 const fs=require('fs')
-const { PDFDocument, StandardFonts, rgb, degrees } = require('pdf-lib');
+const { PDFDocument, StandardFonts, rgb } = require('pdf-lib');
 
 const app = express();
 const PORT = 7000;
@@ -13,15 +14,31 @@ app.use(express.urlencoded({extended:true}))
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
+ const Path = path.resolve(__dirname,"views", 'uploads');
+const storage=multer.diskStorage({
+  destination:(req,file,cb)=>{
+      cb(null,Path)
+  },
+  filename:(req,file,cb)=>{
+    cb(null,file.originalname)
+  }
+})
 
+const upload=multer({storage})
+
+app.post('/upload',upload.single('file'),(req,res)=>{
+       res.send('file uploaded successfully')
+})
 
 app.get('/',(req,res)=>{
    res.render("form")
 })
+app.get('/upload',(req,res)=>{
+   res.render("formedit")
+})
 
 app.post('/file', async (req, res) => {
   const {  content } = req.body;
-
   const data = {
     // title,
     content
@@ -74,7 +91,7 @@ app.post('/file', async (req, res) => {
 //     res.status(500).send("Error editing PDF");
 //   }
 // });
-app.get('/edit', async (req, res) => {
+app.get('/watermark', async (req, res) => {
   try {
     const existingPdfBytes = fs.readFileSync("./sample.pdf");
     const pdfDoc = await PDFDocument.load(existingPdfBytes);
